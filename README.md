@@ -102,9 +102,9 @@ npm install --save @warren-bank/react-trix-editor
 #### Demos:
 
 1. [include _Trix_ externally](https://github.com/warren-bank/react-trix-editor/blob/master/demos/1-trix-global/src/index.js)
-   * [run demo](https://cdn.jsdelivr.net/gh/warren-bank/react-trix-editor/demos/1-trix-global/dist/index.html)
+   * [run demo](https://gitcdn.link/cdn/warren-bank/react-trix-editor/master/demos/1-trix-global/dist/index.html)
 2. [include _Trix_ internally](https://github.com/warren-bank/react-trix-editor/blob/master/demos/2-trix-bundle/src/index.js)
-   * [run demo](https://cdn.jsdelivr.net/gh/warren-bank/react-trix-editor/demos/2-trix-bundle/dist/index.html)
+   * [run demo](https://gitcdn.link/cdn/warren-bank/react-trix-editor/master/demos/2-trix-bundle/dist/index.html)
 
 __notes:__
 
