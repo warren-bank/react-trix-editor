@@ -1,0 +1,28 @@
+{
+  "name": "@warren-bank/react-trix-editor",
+  "version": "0.1.0",
+  "main": "TrixEditor/index.js",
+  "description": "React component for Basecamp's Trix rich text editor",
+  "author": "Warren Bank (https://github.com/warren-bank)",
+  "license": "GPL-2.0",
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "peerDependencies": {
+    "prop-types": "15.6.0",
+    "react": "16.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/warren-bank/react-trix-editor"
+  },
+  "keywords": [
+    "react",
+    "trix",
+    "editor",
+    "rich text editor",
+    "html editor",
+    "wysiwyg"
+  ]
+}
