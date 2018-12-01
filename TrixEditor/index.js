@@ -43,9 +43,11 @@ class TrixEditor extends React.Component {
   }
 
   finalizeEditor() {
-    this.trix = null
+    if (this.trix) {
+      finalizeEditor(this.trix)
+    }
 
-    finalizeEditor()
+    this.trix = null
 
     this.updateRefs()
   }

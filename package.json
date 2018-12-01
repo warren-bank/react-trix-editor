@@ -1,6 +1,6 @@
 {
   "name": "@warren-bank/react-trix-editor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "TrixEditor/index.js",
   "description": "React component for Basecamp's Trix rich text editor",
   "author": "Warren Bank (https://github.com/warren-bank)",

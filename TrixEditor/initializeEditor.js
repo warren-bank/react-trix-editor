@@ -213,7 +213,7 @@ const updateEditor = (trix, doc) => {
 
 // -----------------------------------------------------------------------------
 
-const finalizeEditor = () => {
+const finalizeEditor = (trix) => {
   trix.removeEventListener('trix-initialize',     onEvent_trixInitialize)
   trix.removeEventListener("trix-attachment-add", onEvent_trixAttachmentAdd)
   trix.removeEventListener("trix-paste",          onEvent_trixPaste)
