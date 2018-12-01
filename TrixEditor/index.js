@@ -70,7 +70,7 @@ class TrixEditor extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return (nextProps.document && (nextProps.document !== this.props.document))
+    return (nextProps.document !== this.props.document)
   }
 
   render() {

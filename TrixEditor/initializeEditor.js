@@ -206,8 +206,11 @@ const initializeEditor = (trix, doc) => {
 // -----------------------------------------------------------------------------
 
 const updateEditor = (trix, doc) => {
-  if (trix && doc) {
-    trix.editor.loadDocument(doc)
+  if (trix) {
+    if (doc)
+      trix.editor.loadDocument(doc)
+    else
+      trix.editor.loadHTML('')
   }
 }
 
