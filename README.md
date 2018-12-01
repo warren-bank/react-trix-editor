@@ -102,9 +102,9 @@ npm install --save @warren-bank/react-trix-editor
 #### Demos:
 
 1. [include _Trix_ externally](https://github.com/warren-bank/react-trix-editor/blob/master/demos/1-trix-global/src/index.js)
-   * [run demo](https://gitcdn.link/cdn/warren-bank/react-trix-editor/master/demos/1-trix-global/dist/index.html)
+   * [run demo](https://gitcdn.link/repo/warren-bank/react-trix-editor/master/demos/1-trix-global/dist/index.html)
 2. [include _Trix_ internally](https://github.com/warren-bank/react-trix-editor/blob/master/demos/2-trix-bundle/src/index.js)
-   * [run demo](https://gitcdn.link/cdn/warren-bank/react-trix-editor/master/demos/2-trix-bundle/dist/index.html)
+   * [run demo](https://gitcdn.link/repo/warren-bank/react-trix-editor/master/demos/2-trix-bundle/dist/index.html)
 
 __notes:__
 
@@ -116,9 +116,11 @@ __notes:__
     * every 1 second:
       * this class instance property is saved to _state_
       * the `TrixEditor` component will update _only if_ `this.state.document` has changed
-        * when this does occur, the position of the cursor in the editor jumps to the beginning
-          * makes the demo(s) annoying to use, but does effectively prove that the feature is working
-          * this methodology would never be used in a real app; it's entirely contrived
+        * when this does occur:
+          * the string of HTML text returned by `exportHTML` is logged to _console_
+          * the position of the cursor in the editor jumps to the beginning
+            * makes the demo(s) annoying to use, but does effectively prove that the feature is working
+            * this methodology would never be used in a real app; it's entirely contrived
 
 #### Legal:
 
