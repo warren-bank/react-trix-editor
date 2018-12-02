@@ -3,6 +3,8 @@ const Trix = window.Trix
 // -----------------------------------------------------------------------------
 
 const addToolbarIcon_embedImage = (trix) => {
+  if (!trix) return
+
   const toolBar = trix.toolbarElement
   const button  = document.createElement("button")
 
@@ -39,6 +41,8 @@ const addToolbarIcon_embedImage = (trix) => {
 }
 
 const addToolbarIcon_hr = (trix) => {
+  if (!trix) return
+
   const toolBar = trix.toolbarElement
   const button  = document.createElement("button")
 
@@ -60,6 +64,8 @@ const addToolbarIcon_hr = (trix) => {
 // -----------------------------------------------------------------------------
 
 const handleAttachmentAdd = (trix, attachment) => {
+  if (!trix) return
+
   readFile(attachment.file)
   .then((data) => {
     attachment.remove()
@@ -101,6 +107,8 @@ const readFile = (file) => {
 // -----------------------------------------------------------------------------
 
 const scrollToPosition = (trix) => {
+  if (!trix) return
+
   setTimeout(
     () => {
       try {
@@ -125,15 +133,45 @@ const scrollToPosition = (trix) => {
 // -----------------------------------------------------------------------------
 
 const exportDocument = (trix) => {
+  if (!trix) return null
+
   return trix.editor.getDocument()
 }
 
 const exportHTML = (trix) => {
+  if (!trix) return ''
+
   const node = trix.cloneNode(true)
 
+  const normalize_attachment_attributes = (el) => {
+    el.removeAttribute('data-trix-store-key')
+    el.removeAttribute('data-trix-mutable')
+
+    if (el instanceof HTMLImageElement)
+      el.style.display = 'block'
+
+    return el
+  }
+
   node.querySelectorAll('figure.attachment').forEach(figure => {
-    const payload = figure.firstChild
-    figure.parentNode.replaceChild(payload, figure)
+    let payload
+    while (!payload) {
+      payload = figure.firstChild
+      if (payload === null)
+        break
+      else if (payload.nodeName === '#text') {
+        figure.removeChild(payload)
+        payload = null
+      }
+      else {
+        normalize_attachment_attributes(payload)
+      }
+    }
+
+    if (payload)
+      figure.parentNode.replaceChild(payload, figure)
+    else
+      figure.parentNode.removeChild(figure)
   })
 
   node.querySelectorAll('span[data-trix-serialize="false"]').forEach(el => {
@@ -194,11 +232,13 @@ const onEvent_trixPaste = (e) => {
 // -----------------------------------------------------------------------------
 
 const initializeEditor = (trix, doc) => {
+  if (!trix) return
+
   trix.addEventListener('trix-initialize',     onEvent_trixInitialize)
   trix.addEventListener("trix-attachment-add", onEvent_trixAttachmentAdd)
   trix.addEventListener("trix-paste",          onEvent_trixPaste)
 
-  if (trix && doc) {
+  if (doc) {
     trix.editor.loadDocument(doc)
   }
 }
@@ -206,17 +246,19 @@ const initializeEditor = (trix, doc) => {
 // -----------------------------------------------------------------------------
 
 const updateEditor = (trix, doc) => {
-  if (trix) {
-    if (doc)
-      trix.editor.loadDocument(doc)
-    else
-      trix.editor.loadHTML('')
-  }
+  if (!trix) return
+
+  if (doc)
+    trix.editor.loadDocument(doc)
+  else
+    trix.editor.loadHTML('')
 }
 
 // -----------------------------------------------------------------------------
 
 const finalizeEditor = (trix) => {
+  if (!trix) return
+
   trix.removeEventListener('trix-initialize',     onEvent_trixInitialize)
   trix.removeEventListener("trix-attachment-add", onEvent_trixAttachmentAdd)
   trix.removeEventListener("trix-paste",          onEvent_trixPaste)

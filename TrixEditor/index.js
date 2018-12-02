@@ -11,11 +11,38 @@ class TrixEditor extends React.Component {
     super(props)
 
     this.elementId = `trix-editor-${Date.now()}`
-    this.trix      = null
   }
 
   componentDidMount() {
+    if (this.props.set_exportDocument) {
+      this.props.set_exportDocument(
+        this.get_exportDocument()
+      )
+    }
+
+    if (this.props.set_exportHTML) {
+      this.props.set_exportHTML(
+        this.get_exportHTML()
+      )
+    }
+
     this.initializeEditor()
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.set_exportDocument && (nextProps.set_exportDocument !== this.props.set_exportDocument)) {
+      nextProps.set_exportDocument(
+        this.get_exportDocument()
+      )
+    }
+
+    if (nextProps.set_exportHTML && (nextProps.set_exportHTML !== this.props.set_exportHTML)) {
+      nextProps.set_exportHTML(
+        this.get_exportHTML()
+      )
+    }
+
+    return (nextProps.document !== this.props.document)
   }
 
   componentDidUpdate() {
@@ -23,54 +50,52 @@ class TrixEditor extends React.Component {
   }
 
   componentWillUnmount() {
+    if (this.props.set_exportDocument) {
+      this.props.set_exportDocument(null)
+    }
+
+    if (this.props.set_exportHTML) {
+      this.props.set_exportHTML(null)
+    }
+
     this.finalizeEditor()
   }
 
+  getTrixElement() {
+    return document.getElementById( this.elementId )
+  }
+
   initializeEditor() {
-    this.trix = document.getElementById( this.elementId )
-
-    initializeEditor(this.trix, this.props.document)
-
-    this.updateRefs()
+    const trix = this.getTrixElement()
+    initializeEditor(trix, this.props.document)
   }
 
   updateEditor() {
-    this.trix = document.getElementById( this.elementId )
-
-    updateEditor(this.trix, this.props.document)
-
-    this.updateRefs()
+    const trix = this.getTrixElement()
+    updateEditor(trix, this.props.document)
   }
 
   finalizeEditor() {
-    if (this.trix) {
-      finalizeEditor(this.trix)
-    }
-
-    this.trix = null
-
-    this.updateRefs()
+    const trix = this.getTrixElement()
+    finalizeEditor(trix)
   }
 
-  updateRefs() {
-    if (this.props.set_exportDocument) {
-      this.props.set_exportDocument(
-        (this.trix instanceof HTMLElement)
-          ? exportDocument.bind(this, this.trix)
-          : null
-      )
+  get_exportDocument() {
+    const func = () => {
+      const  trix = this.getTrixElement()
+      const  doc  = exportDocument(trix)
+      return doc
     }
-    if (this.props.set_exportHTML) {
-      this.props.set_exportHTML(
-        (this.trix instanceof HTMLElement)
-          ? exportHTML.bind(this, this.trix)
-          : null
-      )
-    }
+    return func.bind(this)
   }
 
-  shouldComponentUpdate(nextProps) {
-    return (nextProps.document !== this.props.document)
+  get_exportHTML() {
+    const func = () => {
+      const  trix = this.getTrixElement()
+      const  html = exportHTML(trix)
+      return html
+    }
+    return func.bind(this)
   }
 
   render() {

@@ -51,7 +51,8 @@ class App extends React.Component {
   }
 
   render() {
-    console.log('rendering: App', {TrixEditorHTML: (this.exportHTML) ? this.exportHTML() : null})
+    console.log('rendering: App')
+    if (this.exportHTML) console.log(this.exportHTML())
 
     return (
       <TrixEditor document={this.state.document} set_exportDocument={this.set_exportDocument} set_exportHTML={this.set_exportHTML} />
