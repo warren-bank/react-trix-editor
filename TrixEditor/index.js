@@ -14,6 +14,12 @@ class TrixEditor extends React.Component {
   }
 
   componentDidMount() {
+    if (this.props.set_exportTrixElement) {
+      this.props.set_exportTrixElement(
+        this.get_exportTrixElement()
+      )
+    }
+
     if (this.props.set_exportDocument) {
       this.props.set_exportDocument(
         this.get_exportDocument()
@@ -30,6 +36,12 @@ class TrixEditor extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
+    if (nextProps.set_exportTrixElement && (nextProps.set_exportTrixElement !== this.props.set_exportTrixElement)) {
+      nextProps.set_exportTrixElement(
+        this.get_exportTrixElement()
+      )
+    }
+
     if (nextProps.set_exportDocument && (nextProps.set_exportDocument !== this.props.set_exportDocument)) {
       nextProps.set_exportDocument(
         this.get_exportDocument()
@@ -50,6 +62,10 @@ class TrixEditor extends React.Component {
   }
 
   componentWillUnmount() {
+    if (this.props.set_exportTrixElement) {
+      this.props.set_exportTrixElement(null)
+    }
+
     if (this.props.set_exportDocument) {
       this.props.set_exportDocument(null)
     }
@@ -80,6 +96,14 @@ class TrixEditor extends React.Component {
     finalizeEditor(trix)
   }
 
+  get_exportTrixElement() {
+    const func = () => {
+      const  trix = this.getTrixElement()
+      return trix
+    }
+    return func.bind(this)
+  }
+
   get_exportDocument() {
     const func = () => {
       const  trix = this.getTrixElement()
@@ -99,21 +123,29 @@ class TrixEditor extends React.Component {
   }
 
   render() {
+    const attributes = {
+      "class":  "trix-content",
+      "id":     this.elementId
+    }
+    if (this.props.autofocus)
+      attributes["autofocus"] = "true"
+    if (this.props.placeholder)
+      attributes["placeholder"] = placeholder
+
     return (
-      React.createElement("trix-editor", {
-        "class":     "trix-content",
-        "autofocus": "true",
-        "id":        this.elementId
-      })
+      React.createElement("trix-editor", attributes)
     )
   }
 
 }
 
 TrixEditor.propTypes = {
-  document:            PropTypes.object,
-  set_exportDocument:  PropTypes.func,
-  set_exportHTML:      PropTypes.func
+  set_exportTrixElement:  PropTypes.func,
+  set_exportHTML:         PropTypes.func,
+  set_exportDocument:     PropTypes.func,
+  document:               PropTypes.object,
+  autofocus:              PropTypes.bool,
+  placeholder:            PropTypes.string
 }
 
 module.exports = TrixEditor

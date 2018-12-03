@@ -6,26 +6,32 @@ class App extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state              = {document: null}
+    this.state                  = {document: null}
 
-    this.prevDocument       = null
-    this.exportDocument     = null
-    this.exportHTML         = null
+    this.exportTrixElement      = null
+    this.exportHTML             = null
+    this.exportDocument         = null
+    this.prevDocument           = null
 
-    this.set_exportDocument = this.set_exportDocument.bind(this)
-    this.set_exportHTML     = this.set_exportHTML.bind(this)
+    this.set_exportTrixElement  = this.set_exportTrixElement.bind(this)
+    this.set_exportHTML         = this.set_exportHTML.bind(this)
+    this.set_exportDocument     = this.set_exportDocument.bind(this)
 
-    this.timer_1            = null
-    this.timer_2            = null
+    this.timer_1                = null
+    this.timer_2                = null
     this.start_timers()
   }
 
-  set_exportDocument(func) {
-    this.exportDocument     = func
+  set_exportTrixElement(func) {
+    this.exportTrixElement = func
   }
 
   set_exportHTML(func) {
-    this.exportHTML         = func
+    this.exportHTML = func
+  }
+
+  set_exportDocument(func) {
+    this.exportDocument = func
   }
 
   start_timers() {
@@ -51,11 +57,22 @@ class App extends React.Component {
   }
 
   render() {
+    console.clear()
     console.log('rendering: App')
-    if (this.exportHTML) console.log(this.exportHTML())
+    if (this.exportTrixElement) console.log('Trix element:', this.exportTrixElement())
+    if (this.exportHTML)        console.log('Trix HTML:',     this.exportHTML())
+
+    const props = {
+      set_exportTrixElement:  this.set_exportTrixElement,
+      set_exportHTML:         this.set_exportHTML,
+      set_exportDocument:     this.set_exportDocument,
+      document:               this.state.document,
+      autofocus:              false,
+      placeholder:            ''
+    }
 
     return (
-      <TrixEditor document={this.state.document} set_exportDocument={this.set_exportDocument} set_exportHTML={this.set_exportHTML} />
+      <TrixEditor {...props} />
     )
   }
 

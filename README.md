@@ -52,27 +52,44 @@ React component for [Basecamp's _Trix_ rich text editor](https://github.com/base
 
 #### React props
 
+* `set_exportTrixElement`
+  * _Function_
 * `set_exportHTML`
+  * _Function_
 * `set_exportDocument`
+  * _Function_
 * `document`
+  * _Object_
+* `autofocus`
+  * _Boolean_
+* `placeholder`
+  * _String_
+
+__notes:__
+
+* all React props are optional
 
 #### Anti-Pattern
 
+* `set_exportTrixElement`
 * `set_exportHTML`
 * `set_exportDocument`
-  * these are both functions passed to `TrixEditor`
+  * these are functions passed to `TrixEditor`
   * `TrixEditor` calls these functions when:
     * _componentDidMount_
     * _componentDidUpdate_
   * `TrixEditor` passes a (corresponding) function back to the parent component
     * after the parent component has received a reference to these functions, they can be called to obtain (corresponding) data from the `TrixEditor` component
 
-* specifically:
-  * `set_exportHTML` is passed a reference to the function: `exportHTML`
-    * `exportHTML` returns: a string of HTML text
-  * `set_exportDocument` is passed a reference to the function: `exportDocument`
-    * `exportDocument` returns: an immutable Object representation of the current state of the document in the editor
-      * the data type of this immutable Object is the same as the React prop: `document`
+__specifically:__
+
+* `set_exportTrixElement` is passed a reference to the function: `exportTrixElement`
+  * `exportTrixElement` returns: the _HTMLElement_ bound to this instance of _Trix_
+* `set_exportHTML` is passed a reference to the function: `exportHTML`
+  * `exportHTML` returns: a string of HTML text
+* `set_exportDocument` is passed a reference to the function: `exportDocument`
+  * `exportDocument` returns: an immutable Object representation of the current state of the document in the editor
+    * the data type of this immutable Object is the same as the React prop: `document`
 
 #### Installation:
 
